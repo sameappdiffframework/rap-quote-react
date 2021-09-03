@@ -1,13 +1,53 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import '~normalize.css';
+@import '~sakura.css';
+
+:root {
+  --primary-accent: #573b64;
+  --secondary-accent: #c686e3;
+  --bg-color: #e1e7e7;
+  --text-color: #333;
+  --img-border-color: white;
+  --shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  background-color: var(--bg-color);
+  padding-top: 0;
+  color: var(--text-color);
+}
+
+a {
+  color: var(--secondary-accent);
+}
+
+a:hover {
+  color: var(--primary-accent);
+  border-bottom: 2px solid var(--primary-accent);
+}
+
+textarea, input:not([type="checkbox"]) {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+hr {
+  border: 1px solid var(--primary-accent);
+}
+
+button {
+  background-color: var(--primary-accent);
+  border-color: var(--primary-accent);
+}
+
+button:hover:enabled, button:active:enabled {
+  background-color: var(--secondary-accent);
+  border-color: var(--secondary-accent);
+}
+
+ul {
+  padding: 0;
+}
+
+ul.no-bullets {
+  list-style: none;
 }
