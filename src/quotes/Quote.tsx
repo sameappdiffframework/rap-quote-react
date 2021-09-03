@@ -12,11 +12,11 @@ export default class Quote extends React.Component<{ quote: QuoteModel }> {
                 <blockquote>
                     <p>{this.props.quote.quote}</p>
                 </blockquote>
-                <img src={this.props.quote.source.image}/>
+                <img src={this.props.quote.source.image} alt={this.props.quote.source.name}/>
                 <figcaption>
                     <p>{this.props.quote.artist.name}</p>
                     <cite>
-                        <a href={this.props.quote.source.url} target="_blank">
+                        <a href={this.props.quote.source.url} target="_blank" rel="noreferrer">
                             {this.props.quote.source.name}
                         </a>
                     </cite>

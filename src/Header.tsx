@@ -9,6 +9,7 @@ export default class Header extends React.Component {
                     <ul>
                         <li>
                             {/*<a href="#" onClick="openModal()">Create quote</a>*/}
+                            {/*eslint-disable-next-line*/}
                             <a href="#">Create quote</a>
                         </li>
                         <li>
