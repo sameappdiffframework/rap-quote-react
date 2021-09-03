@@ -1,5 +1,6 @@
 import React from 'react';
 import Quote from './Quote';
+import './QuoteWall.css';
 
 export interface QuoteModel {
     quote: string;
