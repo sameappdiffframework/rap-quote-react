@@ -1,27 +1,25 @@
 import React from 'react';
-import { QuoteModel } from './QuoteWall';
 import './Quote.css';
+import { QuoteModel } from './model';
 
-export default class Quote extends React.Component<{ quote: QuoteModel }> {
-    render() {
-        if (!this.props.quote) {
-            return <></>;
-        }
-        return (
-            <figure>
-                <blockquote>
-                    <p>{this.props.quote.quote}</p>
-                </blockquote>
-                <img src={this.props.quote.source.image} alt={this.props.quote.source.name}/>
-                <figcaption>
-                    <p>{this.props.quote.artist.name}</p>
-                    <cite>
-                        <a href={this.props.quote.source.url} target="_blank" rel="noreferrer">
-                            {this.props.quote.source.name}
-                        </a>
-                    </cite>
-                </figcaption>
-            </figure>
-        );
+export default function Quote(props: { quote: QuoteModel }) {
+    if (!props.quote) {
+        return <></>;
     }
+    return (
+        <figure>
+            <blockquote>
+                <p>{props.quote.quote}</p>
+            </blockquote>
+            <img src={props.quote.source.image} alt={props.quote.source.name}/>
+            <figcaption>
+                <p>{props.quote.artist.name}</p>
+                <cite>
+                    <a href={props.quote.source.url} target="_blank" rel="noreferrer">
+                        {props.quote.source.name}
+                    </a>
+                </cite>
+            </figcaption>
+        </figure>
+    );
 }

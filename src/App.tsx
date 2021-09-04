@@ -1,18 +1,17 @@
 import React from 'react';
 import Footer from './Footer';
 import Header from './Header';
-import QuoteWall, { QuoteModel } from './quotes/QuoteWall';
+import { QuoteModel } from './quotes/model';
+import QuoteWall from './quotes/QuoteWall';
 
-export default class App extends React.Component {
-    render() {
-        return (
-            <>
-                <Header/>
-                <QuoteWall quotes={quotes}/>
-                <Footer/>
-            </>
-        );
-    }
+export default function App() {
+    return (
+        <>
+            <Header/>
+            <QuoteWall quotes={quotes}/>
+            <Footer/>
+        </>
+    );
 }
 
 const quotes: QuoteModel[] = [
