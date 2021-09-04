@@ -1,6 +1,6 @@
-import './ModalContent.css';
+import './CreateQuoteForm.css';
 
-export default function ModalContent(props: {onSubmit: () => void, onReset: () => void}) {
+export default function CreateQuoteForm(props: {onSubmit: () => void, onReset: () => void}) {
     return (
         <div role="dialog">
             <h1>Add a quote</h1>

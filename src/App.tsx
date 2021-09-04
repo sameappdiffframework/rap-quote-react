@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 import ModalContainer from './modal/ModalContainer';
+import CreateQuoteForm from './CreateQuoteForm';
 import { QuoteModel } from './quotes/model';
 import QuoteWall from './quotes/QuoteWall';
 
 export default function App() {
     const [modalOpen, setModalOpen] = useState(false);
     const closeModal = () => setModalOpen(false);
+    const content = <CreateQuoteForm onSubmit={closeModal} onReset={closeModal}/>;
     const modal = (modalOpen)
-        ? <ModalContainer onSubmit={closeModal} onReset={closeModal}/>
+        ? <ModalContainer content={content}/>
         : <></>;
     return (
         <>

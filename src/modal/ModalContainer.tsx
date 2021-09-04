@@ -1,11 +1,10 @@
-import ModalContent from './ModalContent';
 import Overlay from './Overlay';
 
-export default function ModalContainer(props: { onSubmit: () => void, onReset: () => void }) {
+export default function ModalContainer(props: { content: JSX.Element }) {
     return (
         <>
             <Overlay/>
-            <ModalContent onReset={props.onReset} onSubmit={props.onSubmit}/>
+            {props.content}
         </>
     );
 }
