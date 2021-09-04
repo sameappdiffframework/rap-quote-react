@@ -1,15 +1,13 @@
 import React from 'react';
 import './Header.css';
 
-export default function Header() {
+export default function Header(props: { onCreateClick: () => void }) {
     return (
         <header>
             <nav>
                 <ul>
                     <li>
-                        {/*<a href="#" onClick="openModal()">Create quote</a>*/}
-                        {/*eslint-disable-next-line*/}
-                        <a href="#">Create quote</a>
+                        <button onClick={props.onCreateClick}>Create quote</button>
                     </li>
                     <li>
                         <a href="/">All quotes</a>

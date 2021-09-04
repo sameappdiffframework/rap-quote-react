@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from './Footer';
 import Header from './Header';
+import ModalContainer from './modal/ModalContainer';
 import { QuoteModel } from './quotes/model';
 import QuoteWall from './quotes/QuoteWall';
 
 export default function App() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const closeModal = () => setModalOpen(false);
+    const modal = (modalOpen)
+        ? <ModalContainer onSubmit={closeModal} onReset={closeModal}/>
+        : <></>;
     return (
         <>
-            <Header/>
+            {modal}
+            <Header onCreateClick={() => setModalOpen(true)}/>
             <QuoteWall quotes={quotes}/>
             <Footer/>
         </>
