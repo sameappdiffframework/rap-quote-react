@@ -15,6 +15,7 @@ header a:hover {
 nav > ul {
     display: flex;
     justify-content: space-around;
+    list-style: none;
 }
 nav > ul > li {
     text-transform: uppercase;
