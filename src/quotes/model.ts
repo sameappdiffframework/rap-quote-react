@@ -1,4 +1,5 @@
 export interface QuoteModel {
+    id: string,
     quote: string;
     artist: {
         name: string;

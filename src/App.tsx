@@ -22,6 +22,7 @@ export default function App() {
 
 const quotes: QuoteModel[] = [
     {
+        id: "1",
         "quote": "You give me steps to climb, I redesign. I made some bleachers.",
         "artist": {
             "name": "Oddisee",
@@ -34,6 +35,7 @@ const quotes: QuoteModel[] = [
         }
     },
     {
+        id: "2",
         "quote": "From the get-go, this pop can cause a panic at the disco.",
         "artist": {
             "name": "Method Man",
@@ -46,6 +48,7 @@ const quotes: QuoteModel[] = [
         }
     },
     {
+        id: "3",
         "quote": "The boy's slick like three kids stacked in an overcoat at a twenty-one and over show.",
         "artist": {
             "name": "Aesop Rock",
@@ -58,6 +61,7 @@ const quotes: QuoteModel[] = [
         }
     },
     {
+        id: "4",
         "quote": "Y'all wearing dresses and purses, dressing in Birkins, fam. I put a cap in that gown - pop and circumstance.",
         "artist": {
             "name": "Joell Ortiz",
