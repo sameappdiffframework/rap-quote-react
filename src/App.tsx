@@ -8,12 +8,16 @@ import QuoteWall from './quotes/QuoteWall';
 
 export default function App() {
     const [modalOpen, setModalOpen] = useState(false);
-    const closeModal = () => setModalOpen(false);
-    const createForm = <CreateQuoteForm onSubmit={closeModal} onReset={closeModal}/>;
+    const closeModal = setModalOpen.bind(null, false);
+    const openModal = setModalOpen.bind(null, true);
     return (
         <>
-            {modalOpen && <ModalContainer content={createForm}/>}
-            <Header onCreateClick={() => setModalOpen(true)}/>
+            {modalOpen && (
+                <ModalContainer>
+                    <CreateQuoteForm onSubmit={closeModal} onReset={closeModal}/>
+                </ModalContainer>
+            )}
+            <Header onCreateClick={openModal}/>
             <QuoteWall quotes={quotes}/>
             <Footer/>
         </>
