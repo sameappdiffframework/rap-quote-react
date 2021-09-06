@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { About } from './About';
+import CreateQuoteForm from './CreateQuoteForm';
 import Footer from './Footer';
 import Header from './Header';
 import ModalContainer from './modal/ModalContainer';
-import CreateQuoteForm from './CreateQuoteForm';
 import { getQuotes, QuoteModel } from './quotes/quote.service';
 import QuoteWall from './quotes/QuoteWall';
 
@@ -22,8 +24,18 @@ export default function App() {
                 </ModalContainer>
             )}
             <Header onCreateClick={openModal}/>
-            <QuoteWall quotes={quotes}/>
+            <main>
+                <Switch>
+                    <Route path="/about">
+                        <About/>
+                    </Route>
+                    <Route path="/">
+                        <QuoteWall quotes={quotes}/>
+                    </Route>
+                </Switch>
+            </main>
             <Footer/>
         </>
     );
 }
+

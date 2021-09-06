@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './Header.css';
 
 export default function Header(props: { onCreateClick: () => void }) {
@@ -10,10 +11,10 @@ export default function Header(props: { onCreateClick: () => void }) {
                         <button onClick={props.onCreateClick}>Create quote</button>
                     </li>
                     <li>
-                        <a href="/">All quotes</a>
+                        <NavLink to="/">All quotes</NavLink>
                     </li>
                     <li>
-                        <a href="/about.html">About</a>
+                        <NavLink to="/about">About</NavLink>
                     </li>
                 </ul>
             </nav>

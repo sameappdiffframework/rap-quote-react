@@ -5,9 +5,9 @@ import { QuoteModel } from './quote.service';
 
 export default function QuoteWall(props: { quotes: QuoteModel[] }) {
     return (
-        <main>
+        <>
             <h1>Rap Quotes</h1>
             {props.quotes.map(quote => (<Quote quote={quote} key={quote.id}></Quote>))}
-        </main>
+        </>
     );
 }
