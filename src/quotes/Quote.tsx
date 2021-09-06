@@ -1,6 +1,6 @@
 import React from 'react';
 import './Quote.css';
-import { QuoteModel } from './model';
+import { QuoteModel } from './quote.service';
 
 export default function Quote(props: { quote: QuoteModel }) {
     if (!props.quote) {

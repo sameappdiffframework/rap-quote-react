@@ -1,7 +1,7 @@
 import React from 'react';
-import { QuoteModel } from './model';
 import Quote from './Quote';
 import './QuoteWall.css';
+import { QuoteModel } from './quote.service';
 
 export default function QuoteWall(props: { quotes: QuoteModel[] }) {
     return (
