@@ -9,10 +9,14 @@ import { getQuotes, QuoteModel } from './quotes/quote.service';
 import QuoteWall from './quotes/QuoteWall';
 
 export default function App() {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(true);
     const [quotes, setQuotes] = useState([] as QuoteModel[]);
     const closeModal = setModalOpen.bind(null, false);
     const openModal = setModalOpen.bind(null, true);
+    const createQuote = (quote: QuoteModel) => {
+        console.log('quote', quote);
+        closeModal();
+    };
     useEffect(() => {
         getQuotes().then(setQuotes);
     }, [setQuotes]);
@@ -20,7 +24,7 @@ export default function App() {
         <>
             {modalOpen && (
                 <ModalContainer>
-                    <CreateQuoteForm onSubmit={closeModal} onReset={closeModal}/>
+                    <CreateQuoteForm onSubmit={createQuote} onReset={closeModal}/>
                 </ModalContainer>
             )}
             <Header onCreateClick={openModal}/>
