@@ -1,5 +1,6 @@
-import './CreateQuoteForm.css';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import './CreateQuoteForm.css';
 import { QuoteModel } from './quotes/quote.service';
 
 export default function CreateQuoteForm(props: { onSubmit: (quote: QuoteModel) => void, onReset: () => void }) {
@@ -10,7 +11,12 @@ export default function CreateQuoteForm(props: { onSubmit: (quote: QuoteModel) =
     const handleQuoteChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
         setQuote((previousQuote: QuoteModel) => Object.assign(previousQuote, { quote: target.value }));
     }
-    const validate = (_: FormEvent) => props.onSubmit(quote);
+    const validate = (event: FormEvent) => {
+        // TOD add real validation
+        event.preventDefault();
+        props.onSubmit(Object.assign(quote, { id: uuidv4() }));
+        setQuote({} as QuoteModel);
+    };
     return (
         <div role="dialog">
             <h1>Add a quote</h1>
