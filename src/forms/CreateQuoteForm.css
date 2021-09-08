@@ -10,3 +10,10 @@
     padding: 0.5em;
     z-index: 2;
 }
+
+input.touched.invalid,
+input.dirty.invalid,
+textarea.touched.invalid,
+textarea.dirty.invalid {
+    border: 1px solid indianred;
+}

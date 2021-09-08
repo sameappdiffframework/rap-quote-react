@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 export interface QuoteModel {
     id: string,
     quote: string;
@@ -10,6 +12,22 @@ export interface QuoteModel {
         url?: string;
         image?: string;
     };
+}
+
+export function emptyQuoteModel(): QuoteModel {
+    return {
+        id: uuid(),
+        source: {
+            name: '',
+            url: '',
+            image: ''
+        },
+        artist: {
+            name: '',
+            url: ''
+        },
+        quote: ''
+    }
 }
 
 const inMemoryQuotes: QuoteModel[] = [];

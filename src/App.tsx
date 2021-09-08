@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { About } from './About';
-import CreateQuoteForm from './CreateQuoteForm';
+import CreateQuoteForm from './forms/CreateQuoteForm';
 import Footer from './Footer';
 import Header from './Header';
 import ModalContainer from './modal/ModalContainer';
