@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { isEmptyString } from '../forms/utils';
 
 export interface QuoteModel {
     id: string,
@@ -12,6 +13,13 @@ export interface QuoteModel {
         url?: string;
         image?: string;
     };
+}
+
+export function isValidQuoteModel(quote: QuoteModel): boolean {
+    return !isEmptyString(quote.id)
+        && !isEmptyString(quote.quote)
+        && !isEmptyString(quote.artist.name)
+        && !isEmptyString(quote.source.name);
 }
 
 export function emptyQuoteModel(): QuoteModel {
@@ -30,7 +38,7 @@ export function emptyQuoteModel(): QuoteModel {
     }
 }
 
-const inMemoryQuotes: QuoteModel[] = [];
+let inMemoryQuotes: QuoteModel[] = [];
 
 export function getQuotes(): Promise<QuoteModel[]> {
     return fetch('/quotes.json')
@@ -39,6 +47,6 @@ export function getQuotes(): Promise<QuoteModel[]> {
 }
 
 export function createQuote(quote: QuoteModel): Promise<QuoteModel> {
-    inMemoryQuotes.push(quote);
+    inMemoryQuotes = [quote, ...inMemoryQuotes];
     return Promise.resolve(Object.assign({}, quote));
 }

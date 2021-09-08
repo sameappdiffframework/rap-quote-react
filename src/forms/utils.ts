@@ -10,11 +10,15 @@ export const DIRTY_CLASS = 'dirty';
 export const TOUCHED_CLASS = 'touched';
 export const INVALID_CLASS = 'invalid';
 
+export function isEmptyString(str: string): boolean {
+    return str === null || str === undefined || str.length === 0 || str.match(/^ *$/) !== null;
+}
+
 const maxLength: ValidatorFnFactory = (maxLength: number) => (ele: FormControl) => {
     return (ele?.value?.length <= maxLength) ? {} : { maxLength: true };
 };
 const required: ValidatorFn = (ele: FormControl) => {
-    return (ele?.value) ? {} : { required: true };
+    return (!isEmptyString(ele?.value)) ? {} : { required: true };
 };
 export const VALIDATORS = {
     required: required,
@@ -24,7 +28,7 @@ export const VALIDATORS = {
 function validateChange(
     { target }: ChangeEvent<FormControl>,
     validators: ValidatorFn[],
-    onValidChange: (value: string) => void,
+    onChange: (value: string) => void,
     onErrorChange: (errors: ValidationErrors) => void
 ) {
     target.classList.add(DIRTY_CLASS);
@@ -33,11 +37,11 @@ function validateChange(
         .reduce((sum, err) => Object.assign(sum, err), {});
     if (Object.keys(errors).length === 0) {
         target.classList.remove(INVALID_CLASS);
-        onValidChange(target.value);
     } else {
         target.classList.add(INVALID_CLASS);
-        onErrorChange(errors);
     }
+    onChange(target.value);
+    onErrorChange(errors);
 }
 
 const NO_OP = () => {
@@ -45,11 +49,11 @@ const NO_OP = () => {
 
 export function ControlChangeFactory<T extends FormControl>(
     validators: ValidatorFn[],
-    onValidChange: (value: string) => void = NO_OP,
+    onChange: (value: string) => void = NO_OP,
     onErrorChange: (errors: ValidationErrors) => void = NO_OP
 ): ChangeEventHandler<T> {
     return (event: ChangeEvent<T>) => {
-        validateChange(event, validators, onValidChange, onErrorChange);
+        validateChange(event, validators, onChange, onErrorChange);
     };
 }
 
