@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { FormikHelpers } from 'formik/dist/types';
 import * as Yup from 'yup';
 import './CreateQuoteForm.css';
+import Input from './Input';
 
 export interface QuoteEntry {
     quote: string;
@@ -47,23 +48,9 @@ export default function CreateQuoteForm(props: { onSubmit: (quote: QuoteEntry) =
                     onReset={props.onReset}>
                 {formik => (
                     <Form>
-                        <div>
-                            <label htmlFor="artist">Artist</label>
-                            <Field name="artist" type="text"/>
-                            <ErrorMessage name="artist"/>
-                        </div>
-
-                        <div>
-                            <label htmlFor="source">Source</label>
-                            <Field name="source" type="text"/>
-                            <ErrorMessage name="source"/>
-                        </div>
-
-                        <div>
-                            <label htmlFor="quote">Quote</label>
-                            <Field name="quote" as="textarea"/>
-                            <ErrorMessage name="quote"/>
-                        </div>
+                        <Input name="artist" label="Artist" inputType="text"/>
+                        <Input name="source" label="Source" inputType="text"/>
+                        <Input name="quote" label="Quote" inputType="textarea"/>
 
                         <button type="submit" disabled={!formik.dirty || !formik.isValid}>Submit</button>
                         <button type="reset">Cancel</button>

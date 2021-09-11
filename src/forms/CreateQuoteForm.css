@@ -11,9 +11,7 @@
     z-index: 2;
 }
 
-input.touched.invalid,
-input.dirty.invalid,
-textarea.touched.invalid,
-textarea.dirty.invalid {
+input.error,
+textarea.error {
     border: 1px solid indianred;
 }
