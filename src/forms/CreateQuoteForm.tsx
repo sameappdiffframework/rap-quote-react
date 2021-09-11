@@ -1,92 +1,75 @@
-import { FormEvent, useState } from 'react';
-import { emptyQuoteModel, isValidQuoteModel, QuoteModel } from '../quotes/quote.service';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { FormikHelpers } from 'formik/dist/types';
+import * as Yup from 'yup';
 import './CreateQuoteForm.css';
-import { ControlChangeFactory, touchOnBlur, ValidationErrors, VALIDATORS } from './utils';
 
-type CreateQuoteFormInputs = 'artist' | 'source' | 'quote';
-type CreateQuoteFormErrors = {
-    artist: ValidationErrors,
-    source: ValidationErrors,
-    quote: ValidationErrors
+export interface QuoteEntry {
+    quote: string;
+    artist: string;
+    source: string;
 }
 
-function initialErrorState(): CreateQuoteFormErrors {
-    return { artist: {}, source: {}, quote: {} };
-}
+const schema = Yup.object({
+    quote: Yup.string()
+        .max(100, 'Must be 100 characters or less')
+        .required('Required'),
+    artist: Yup.string()
+        .max(25, 'Must be 25 characters or less')
+        .required('Required'),
+    source: Yup.string()
+        .max(25, 'Must be 25 characters or less')
+        .required('Required')
+})
 
-export default function CreateQuoteForm(props: { onSubmit: (quote: QuoteModel) => void, onReset: () => void }) {
-    const [quote, setQuote] = useState(emptyQuoteModel());
-    const [errors, setErrors] = useState(initialErrorState());
-    const numErrors = Object.keys(errors.artist).length
-        + Object.keys(errors.source).length
-        + Object.keys(errors.quote).length;
-    const updateQuote = (val: string, prop: CreateQuoteFormInputs) => {
-        const updater = (prevQuote: QuoteModel) => {
-            const patch: Partial<QuoteModel> = (prop === 'artist')
-                ? { artist: Object.assign(prevQuote.artist, { name: val }) }
-                : (prop === 'source')
-                    ? { source: Object.assign(prevQuote.source, { name: val }) }
-                    : { quote: val };
-            return Object.assign({}, prevQuote, patch);
-        };
-        setQuote(updater);
-    };
-    const updateErrors = (name: CreateQuoteFormInputs, newErrors: ValidationErrors) => {
-        setErrors(prevErrors => Object.assign({}, prevErrors, { [name]: newErrors }));
+function emptyQuote(): QuoteEntry {
+    return {
+        source: '',
+        artist: '',
+        quote: ''
     }
-    const handleSourceChange = ControlChangeFactory<HTMLInputElement>(
-        [VALIDATORS.required, VALIDATORS.maxLength(25)],
-        (newName: string) => updateQuote(newName, 'source'),
-        (newErrors: ValidationErrors) => updateErrors('source', newErrors)
-    );
-    const handleArtistChange = ControlChangeFactory<HTMLInputElement>(
-        [VALIDATORS.required, VALIDATORS.maxLength(25)],
-        (newName: string) => updateQuote(newName, 'artist'),
-        (newErrors: ValidationErrors) => updateErrors('artist', newErrors)
-    );
-    const handleQuoteChange = ControlChangeFactory<HTMLTextAreaElement>(
-        [VALIDATORS.required, VALIDATORS.maxLength(100)],
-        (newQuote: string) => updateQuote(newQuote, 'quote'),
-        (newErrors: ValidationErrors) => updateErrors('quote', newErrors)
-    );
-    const validate = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        props.onSubmit(Object.assign({}, quote));
-    };
-    const validQuote = isValidQuoteModel(quote);
+}
+
+export default function CreateQuoteForm(props: { onSubmit: (quote: QuoteEntry) => void, onReset: () => void }) {
+    const initialQuote = emptyQuote();
+
+    function onSubmit(newQuote: QuoteEntry, { setSubmitting }: FormikHelpers<QuoteEntry>) {
+        props.onSubmit(Object.assign({}, newQuote));
+        setSubmitting(false);
+    }
+
     return (
         <div role="dialog">
             <h1>Add a quote</h1>
             <hr/>
-            <form onSubmit={validate} onReset={props.onReset}>
-                <label htmlFor="artist">Artist</label>
-                <input type="text"
-                       id="artist"
-                       name="artist"
-                       value={quote.artist.name}
-                       onChange={handleArtistChange}
-                       onBlur={touchOnBlur}/>
-                {errors.artist?.required && (<div>Artist is required.</div>)}
-                {errors.artist?.maxLength && (<div>Artist must be less than 25 characters long.</div>)}
-                <label htmlFor="source">Source</label>
-                <input type="text"
-                       id="source"
-                       name="source"
-                       value={quote.source.name}
-                       onChange={handleSourceChange}
-                       onBlur={touchOnBlur}/>
-                {errors.source?.required && (<div>Source is required.</div>)}
-                {errors.source?.maxLength && (<div>Source must be less than 25 characters long.</div>)}
-                <label htmlFor="quote">Quote</label>
-                <textarea id="quote"
-                          value={quote.quote}
-                          onBlur={touchOnBlur}
-                          onChange={handleQuoteChange}/>
-                {errors.quote?.required && (<div>Quote is required.</div>)}
-                {errors.quote?.maxLength && (<div>Quote must be less than 100 characters long.</div>)}
-                <button type="submit" disabled={!validQuote || numErrors > 0}>Submit</button>
-                <button type="reset">Cancel</button>
-            </form>
+            <Formik initialValues={initialQuote}
+                    validationSchema={schema}
+                    onSubmit={onSubmit}
+                    onReset={props.onReset}>
+                {formik => (
+                    <Form>
+                        <div>
+                            <label htmlFor="artist">Artist</label>
+                            <Field name="artist" type="text"/>
+                            <ErrorMessage name="artist"/>
+                        </div>
+
+                        <div>
+                            <label htmlFor="source">Source</label>
+                            <Field name="source" type="text"/>
+                            <ErrorMessage name="source"/>
+                        </div>
+
+                        <div>
+                            <label htmlFor="quote">Quote</label>
+                            <Field name="quote" as="textarea"/>
+                            <ErrorMessage name="quote"/>
+                        </div>
+
+                        <button type="submit" disabled={!formik.dirty || !formik.isValid}>Submit</button>
+                        <button type="reset">Cancel</button>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 }

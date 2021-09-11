@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import { isEmptyString } from '../forms/utils';
 
 export interface QuoteModel {
     id: string,
@@ -13,13 +12,6 @@ export interface QuoteModel {
         url?: string;
         image?: string;
     };
-}
-
-export function isValidQuoteModel(quote: QuoteModel): boolean {
-    return !isEmptyString(quote.id)
-        && !isEmptyString(quote.quote)
-        && !isEmptyString(quote.artist.name)
-        && !isEmptyString(quote.source.name);
 }
 
 export function emptyQuoteModel(): QuoteModel {

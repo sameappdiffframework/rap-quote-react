@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { About } from './About';
-import CreateQuoteForm from './forms/CreateQuoteForm';
 import Footer from './Footer';
+import CreateQuoteForm, { QuoteEntry } from './forms/CreateQuoteForm';
 import Header from './Header';
 import ModalContainer from './modal/ModalContainer';
-import { createQuote, getQuotes, QuoteModel } from './quotes/quote.service';
+import { createQuote, emptyQuoteModel, getQuotes, QuoteModel } from './quotes/quote.service';
 import QuoteWall from './quotes/QuoteWall';
 
 export default function App() {
@@ -17,8 +17,13 @@ export default function App() {
         const newQuotes = await getQuotes();
         setQuotes(newQuotes);
     }
-    const createQuoteAndCloseModal = async (newQuote: QuoteModel) => {
-        await createQuote(newQuote);
+    const createQuoteAndCloseModal = async (newQuote: QuoteEntry) => {
+        const quote: Partial<QuoteModel> = {
+            quote: newQuote.quote,
+            artist: { name: newQuote.artist },
+            source: { name: newQuote.source }
+        };
+        await createQuote(Object.assign(emptyQuoteModel(), quote));
         await updateQuotes();
         closeModal();
     };
